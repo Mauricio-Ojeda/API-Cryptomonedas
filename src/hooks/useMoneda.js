@@ -19,7 +19,7 @@ const Select =styled.select `
     border: none;
     text-align:center;
     -webkit-appearance: none;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 `;
 
 const useMoneda = (initState, label, options) => {

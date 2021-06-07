@@ -1,5 +1,8 @@
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import Form from './components/Form';
+import Quotation from './components/Quotation';
+
+import axios from 'axios';
 
 import styled from '@emotion/styled';
 import image from './assets/cryptomonedas.png';
@@ -38,6 +41,27 @@ const Heading = styled.h1 `
 `;
 
 function App() {
+
+  const [moneda, setMoneda] = useState('');
+  const [cryptomoneda, setCryptomoneda] = useState('');
+
+  // State consulta
+  const [responseQuotation, setResponseQuotation] = useState({});
+
+  useEffect(() => {
+    if(moneda === '' || cryptomoneda === '') return;
+    
+    // consulting API
+    const requestAPI = async () => {
+      const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${cryptomoneda}&tsyms=${moneda}`;
+      const response = await axios.get(url);
+      setResponseQuotation(response.data.DISPLAY[cryptomoneda][moneda]); 
+    }
+    
+    requestAPI();
+
+  }, [moneda, cryptomoneda])
+
   return (
     <Container>
       <div>
@@ -49,10 +73,19 @@ function App() {
       <div>
         <Heading>Cotiza Cryptomonedas al Instante</Heading>
         <Form
+          setCryptomoneda={setCryptomoneda}
+          setMoneda={setMoneda}
 
         />
+
+        <Quotation
+            responseQuotation={responseQuotation}
+        />
+
       </div>
+
     </Container>
+
   );
 }
 

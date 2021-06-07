@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import Error from './Error';
+
 import useMoneda from '../hooks/useMoneda';
 import useCryptomoneda from '../hooks/useCryptomoneda';  
+import axios from 'axios';
+
 import styled from '@emotion/styled';
 
 const Button = styled.input `
@@ -22,7 +26,15 @@ const Button = styled.input `
     }
 `;
 
-const Form = () => {
+
+
+const Form = ({setMoneda, setCryptomoneda}) => {
+
+    // State list Cryptomonedas
+
+    const [arrayCryto, setArrayCrypto] = useState([]);
+
+    const [error, setError] = useState(false)
 
     const initState = '';
     const Options = [
@@ -39,9 +51,43 @@ const Form = () => {
     
     
     // use useCryptomonedas
-    const [cryptomoneda, SelectorCryptomoneda] = useCryptomoneda();
+    const [cryptomoneda, SelectorCryptomoneda] = useCryptomoneda('', 'Elige tu Cryptomoneda', arrayCryto);
+
+    // Call API Cryptocompare
+
+    useEffect(() => {
+        const requestAPI = async () => {
+            const url = `https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=ARS`;
+            const response = await axios.get(url);
+            setArrayCrypto(response.data.Data);
+        }
+        requestAPI();
+    }, [])
+
+    const cotizarMoneda = e => {
+        e.preventDefault();
+
+        // Validation
+        if(moneda === '' || cryptomoneda === ''){
+            setError(true);
+            return;
+        }
+       
+        // reset state validation
+        setError(false);
+
+        // Pass data to app
+        setMoneda(moneda);
+        setCryptomoneda(cryptomoneda);
+    }
+
     return (
-        <form>
+        <form
+            onSubmit= {cotizarMoneda}
+        >
+
+            {error ? <Error mensaje="Hay un Error" /> :  null}
+
             <SelectorMonedas 
 
             />
@@ -51,8 +97,9 @@ const Form = () => {
             />
             
             <Button
-                type="submit"
+                type="submit"                
                 value="Cotizar"
+                
             />
         </form>
     )

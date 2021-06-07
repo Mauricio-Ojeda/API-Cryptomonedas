@@ -19,10 +19,12 @@ const Select =styled.select `
     border: none;
     text-align:center;
     -webkit-appearance: none;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 `;
 
 const useCryptomoneda = (initState, label, options) => {
+
+    
 
     // State de nuestro custom hook
     const [state, setstate] = useState({initState});
@@ -36,7 +38,7 @@ const useCryptomoneda = (initState, label, options) => {
                 value={state}
             >
                 <option value=''>--- Seleccionar ---</option>
-                {options.map(option =>( <option key={option.cod} value={option.cod}>{option.name}</option>))}                 
+                {options.map(option =>( <option key={option.CoinInfo.Id} value={option.CoinInfo.Name}>{option.CoinInfo.FullName}</option>))}                 
             </Select>
         </Fragment>
 
