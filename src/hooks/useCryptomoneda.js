@@ -27,7 +27,7 @@ const useCryptomoneda = (initState, label, options) => {
     
 
     // State de nuestro custom hook
-    const [state, setstate] = useState({initState});
+    const [state, setstate] = useState(initState);
 
     const SelectCryptomoneda = () => (
         

@@ -1,6 +1,7 @@
 import React,{ useState, useEffect } from 'react';
 import Form from './components/Form';
 import Quotation from './components/Quotation';
+import Spinner from './components/Spinner';
 
 import axios from 'axios';
 
@@ -44,6 +45,7 @@ function App() {
 
   const [moneda, setMoneda] = useState('');
   const [cryptomoneda, setCryptomoneda] = useState('');
+  const [loading, setLoading] = useState(false);
 
   // State consulta
   const [responseQuotation, setResponseQuotation] = useState({});
@@ -55,12 +57,27 @@ function App() {
     const requestAPI = async () => {
       const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${cryptomoneda}&tsyms=${moneda}`;
       const response = await axios.get(url);
-      setResponseQuotation(response.data.DISPLAY[cryptomoneda][moneda]); 
+
+      setLoading(true);
+
+      setTimeout(() => {
+        
+        // reset Spinner
+        setLoading(false);
+
+        //show response
+        setResponseQuotation(response.data.DISPLAY[cryptomoneda][moneda]);
+
+      }, 3000);
+
+       
     }
     
     requestAPI();
 
   }, [moneda, cryptomoneda])
+
+  const Component = (loading) ? <Spinner/> : ( <Quotation responseQuotation={responseQuotation} /> );
 
   return (
     <Container>
@@ -78,9 +95,7 @@ function App() {
 
         />
 
-        <Quotation
-            responseQuotation={responseQuotation}
-        />
+        {Component}
 
       </div>
 

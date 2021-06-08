@@ -5,19 +5,20 @@ import styled from '@emotion/styled';
 const Pprice = styled.p `
 	color: #fff;
 	text-align: left;
-	font-family: 'Bebas Neue', cursiva;
+	font-family: 'Roboto', sans-serif;
 	font-size: 2rem;
 `;
 
 const P = styled.p `
 	color: #fff;
 	text-align: left;
-	font-family: 'Bebas Neue', cursiva;
+	font-family: 'Roboto', sans-serif;
 	font-size: 1rem;
 `;
 
 const Span = styled.span `
 	margin-left: 0.3rem;
+	font-weight: bold;
 
 `;
 

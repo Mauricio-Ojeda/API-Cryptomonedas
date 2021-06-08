@@ -36,7 +36,7 @@ const Form = ({setMoneda, setCryptomoneda}) => {
 
     const [error, setError] = useState(false)
 
-    const initState = '';
+    
     const Options = [
         {cod: 'ARS', name: 'Peso Argentino'},
         {cod: 'USD', name: 'Dolar Estados Unidos'},
@@ -47,12 +47,13 @@ const Form = ({setMoneda, setCryptomoneda}) => {
     
     // Utilizar useMoneda
    
-    const [ moneda, SelectorMonedas ] = useMoneda(initState, 'Elige tu moneda', Options);
-    
-    
+    const [ moneda, SelectorMonedas ] = useMoneda('', 'Elige tu moneda', Options);
+
+       
     // use useCryptomonedas
     const [cryptomoneda, SelectorCryptomoneda] = useCryptomoneda('', 'Elige tu Cryptomoneda', arrayCryto);
 
+    
     // Call API Cryptocompare
 
     useEffect(() => {
