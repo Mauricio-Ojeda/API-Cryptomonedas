@@ -87,7 +87,7 @@ const Form = ({setMoneda, setCryptomoneda}) => {
             onSubmit= {cotizarMoneda}
         >
 
-            {error ? <Error mensaje="Hay un Error" /> :  null}
+            { error && <Error mensaje="Debe completar ambos campos" /> }
 
             <SelectorMonedas 
 
